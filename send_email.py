@@ -1,8 +1,7 @@
 import os
-from fastapi import BackgroundTasks
+#from fastapi import BackgroundTasks
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from dotenv import load_dotenv
-from get_weather import GetCityName
 load_dotenv('.env')
 
 class Envs:
@@ -13,6 +12,7 @@ class Envs:
     MAIL_SERVER=os.getenv("MAIL_SERVER")
     MAIL_SERVER_READ=os.getenv("MAIL_SERVER_READ")
     MAIL_FROM_NAME=os.getenv("MAIL_FROM_NAME")
+    API_KEY=os.getenv("API_KEY")
 
 conf = ConnectionConfig(
     MAIL_USERNAME=Envs.MAIL_USERNAME,
@@ -24,8 +24,6 @@ conf = ConnectionConfig(
     MAIL_STARTTLS=True,
     MAIL_SSL_TLS=False,
     USE_CREDENTIALS=True,
-    TEMPLATE_FOLDER='./templates'
-
 )
 
 async def send_email_async(subject: str, email_to: str, body: str):
@@ -39,14 +37,14 @@ async def send_email_async(subject: str, email_to: str, body: str):
     fm = FastMail(conf)
     await fm.send_message(message)
 
-def send_email_background(background_tasks: BackgroundTasks, subject: str, email_to: str, body: str):
-    msg = MessageSchema(
-        subject=subject,
-        recipients=[email_to],
-        body=body,
-        subtype='html'
-    )
+# def send_email_background(background_tasks: BackgroundTasks, subject: str, email_to: str, body: str):
+#     msg = MessageSchema(
+#         subject=subject,
+#         recipients=[email_to],
+#         body=body,
+#         subtype='html'
+#     )
 
-    fm=FastMail(conf)
-    background_tasks.add_task(fm.send_message, msg, template_name="email.html")
+#     fm=FastMail(conf)
+#     background_tasks.add_task(fm.send_message, msg, template_name="email.html")
 

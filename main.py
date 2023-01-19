@@ -1,5 +1,5 @@
 from fastapi import FastAPI, BackgroundTasks
-from send_email import send_email_async, send_email_background
+from send_email import send_email_async
 from read_email import read_email_message
 from get_weather import GetCityName
 

@@ -1,6 +1,7 @@
 import requests, json
+from send_email import Envs
 
-key = "981c95e600e137fb1568801556700177"
+key = Envs.API_KEY
 
 async def GetCityName(name: str):
     try:
